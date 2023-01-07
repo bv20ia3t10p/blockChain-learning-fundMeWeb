@@ -26,6 +26,10 @@ contract FundMe {
     address[] public funders;
     mapping(address => uint256) public addressToAmount;
 
+    function getOwner() public view returns (address) {
+        return owner;
+    }
+
     function fund() public payable {
         //Tx fields: Nonce ; Gas price ; Gas limit ; To ; Value ; Data ; signature's v r s
         //public allows anyone to call the functiona and payable makes the contract be able to hold funds

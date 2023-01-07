@@ -4,13 +4,13 @@ require('dotenv').config()
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: '0.8.17',
-  defaultNetwork: 'ganache',
+  defaultNetwork: 'hardhat',
   networks: {
     ganache: {
       url: 'HTTP://127.0.0.1:7545',
       chainId: 1337,
       accounts: [
-        'cb8cdc52dfce193112c00c0ff5827d6109a444973561e3fa7754ce3b9142a51e',
+        '7c12369a45f82962386816d28ae92d0b0a55032af48566a04d496ddc967579cc',
       ],
     },
     goerli: {

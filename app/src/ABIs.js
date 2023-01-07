@@ -60,6 +60,19 @@ export const fundMeABI = [
   },
   {
     inputs: [],
+    name: 'getOwner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'minUSD',
     outputs: [
       {
@@ -96,4 +109,4 @@ export const fundMeABI = [
     type: 'receive',
   },
 ]
-export const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3'
+export const contractAddress = '0x670f5476Fc622f4A3070Ac87683356D9D391aC5b'

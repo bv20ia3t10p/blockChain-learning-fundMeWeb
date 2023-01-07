@@ -10,9 +10,9 @@ const connect = async () => {
   }
 }
 
-async function fund(ethAmount) {
+const fund = async (ethAmount) => {
   console.log(`Funding with ${ethAmount}...`)
-  if (typeof window.ethereum !== 'undefined') {
+  if (typeof window.ethereum) {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
     const contract = new ethers.Contract(contractAddress, fundMeABI, signer)
@@ -39,12 +39,19 @@ const listenForTransactionMine = (transactionResponse, provider) => {
   })
 }
 
-const getBalance = async (setBalance) => {
+const getBalance = async (setBalance, setCurrentAccount, setOwner) => {
   if (typeof window.ethereum) {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const signer = provider.getSigner()
+    const contract = new ethers.Contract(contractAddress, fundMeABI, signer)
     const balance = await provider.getBalance(contractAddress)
     setBalance(ethers.utils.formatEther(balance))
-    console.log(balance)
+    // console.log(balance)
+    const owner = await contract.getOwner()
+    console.log(owner)
+    const currentAccount = await signer.getAddress()
+    setCurrentAccount(currentAccount)
+    // setOwner(owner)
   }
 }
 
@@ -72,6 +79,8 @@ function App() {
   const [latestFunder, setLatestFunder] = useState('')
   const [latestAmount, getLatestAmount] = useState('')
   const [balance, setBalance] = useState('')
+  const [owner, setOwner] = useState('')
+  const [currentAccount, setCurrentAccount] = useState('')
   return (
     <div className="App">
       <button onClick={() => connect()}>Connect wallet</button>
@@ -79,7 +88,14 @@ function App() {
       <button onClick={() => fund(eth)}>Fund</button>
       <div className="">{latestAmount}</div>
       <div className="">Balance : {balance}</div>
-      <button onClick={() => getBalance(setBalance)}>Get balance</button>
+      <button
+        onClick={() => getBalance(setBalance, setCurrentAccount, setOwner)}
+      >
+        Get balance
+      </button>
+      <button onClick={() => withdraw()}>withdraw</button>
+      <div className="">Owner :{owner}</div>
+      <div className="">Current account: {currentAccount}</div>
     </div>
   )
 }
